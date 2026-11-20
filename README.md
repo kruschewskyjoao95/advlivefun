@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# JurisAdv
 
-## Getting Started
+Marketplace jurídico bilateral em validação, com uma camada de compliance
+desde a especificação. Uma pessoa publica um resumo minimizado e pode receber
+contatos de até dois advogados verificados, em conversas privadas e
+independentes.
 
-First, run the development server:
+**Etapa 0 · Especificação — concluída.** A fonte única de produto e arquitetura
+está em [`ROADMAP.md`](ROADMAP.md); as decisões detalhadas estão em
+[`docs/adr`](docs/adr). As invariantes de conformidade estão em
+[`COMPLIANCE.md`](COMPLIANCE.md).
+
+## Estado do projeto
+
+O repositório contém landing page, cadastro nacional de interesse, persistência
+PostgreSQL com Drizzle e correção de logging seguro no endpoint de cadastro.
+Não existe checkout ou cobrança real; tampouco autenticação, mural,
+verificação OAB, mensagens ou saldo de contatos.
+
+A conta Stripe ainda não foi criada. Integração futura depende da conta,
+produtos/preços, portal e webhook, além da aprovação jurídica e de privacidade.
+
+## Stack
+
+- Bun
+- Next.js e TypeScript
+- PostgreSQL e Drizzle ORM
+- Stripe como adapter externo futuro
+- Zod
+
+## Desenvolvimento local
+
+Instale as dependências:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+bun install
+```
+
+Defina `DATABASE_URL` para o PostgreSQL local, aplique as migrações e inicie o
+servidor:
+
+```bash
+bun run db:push
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Verificações
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+bun test
+bun run typecheck
+bun run lint
+bun run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Próximas etapas
 
-## Learn More
+1. validação assistida, parecer jurídico, privacidade e segurança;
+2. identidade com Better Auth, papéis e verificação OAB;
+3. publicação minimizada, consentimento, mural e RLS;
+4. assinatura, saldo e integração Stripe;
+5. contato concorrente, conversas e piloto assistido.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Nenhum caso real pode ser recebido nem a primeira cobrança executada antes dos
+gates jurídicos, de privacidade, segurança, concorrência e observabilidade
+descritos no roadmap.

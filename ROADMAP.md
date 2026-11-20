@@ -12,9 +12,14 @@ que contradigam estas decisões precisam de ADR antes da implementação.
 
 ## Estado atual
 
-O repositório contém uma landing page, cadastro de interesse, esquema
-PostgreSQL versionado com Drizzle e endpoint Stripe que valida a assinatura do
-webhook. Ainda não existem autenticação, mural, verificação OAB, checkout,
+**Etapa 0 · Especificação — concluída.** O roadmap e os ADRs 0001 a 0004
+formam uma fonte única para produto, identidade, privacidade, concorrência,
+cobrança, conversas, moderação e retenção. O bloqueador conhecido de logging
+do cadastro também possui correção e teste automatizado de regressão.
+
+O repositório contém uma landing page, cadastro de interesse, esquema mínimo
+PostgreSQL versionado com Drizzle e teste de não vazamento no cadastro. Ainda
+não existem autenticação, mural, verificação OAB, checkout, endpoint Stripe,
 persistência idempotente de eventos, saldo de contatos ou conversas.
 
 A primeira entrega é documentação e aprendizado, não um piloto com casos
@@ -301,7 +306,7 @@ nome, e-mail, resumo, mensagem, token ou parâmetros de erro com dados pessoais.
 
 | Etapa | Entrega | Critério objetivo |
 | --- | --- | --- |
-| 0 · Especificação | Este roadmap e ADRs de produto, identidade, privacidade, concorrência e cobrança. | Não há divergência entre UI, README, backlog e decisões. |
+| 0 · Especificação | Este roadmap e ADRs de produto, identidade, privacidade, concorrência, cobrança e conversas. | **Concluída:** README, COMPLIANCE, ADRs e testes de regressão refletem as decisões propostas nos ADRs. |
 | 1 · Validação | Cadastro nacional e entrevistas em uma turma assistida. Protótipo sem casos inventados. | 10 potenciais solicitantes e 5 profissionais; parecer jurídico, privacidade e segurança registrados. |
 | 2 · Identidade | Better Auth, conta, CPF/HMAC, papéis, verificação OAB e suspensão. | Anônimo ou conta pendente não lê mural; suspensão bloqueia novos contatos. |
 | 3 · Publicação | Área/UF, prévia, bloqueio de identificadores, consentimento, mural, retirada e RLS. | Autora vê seu caso; outro cliente não lê; advogado pendente ou suspenso não acessa; URL pública retorna não autorizado. |

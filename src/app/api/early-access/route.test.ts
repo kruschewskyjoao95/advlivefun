@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, test } from "bun:test";
-import { handleEarlyAccessRequest } from "./route";
+import { handleEarlyAccessRequest, POST } from "./route";
 
 const originalDatabaseUrl = process.env.DATABASE_URL;
 
@@ -12,6 +12,61 @@ afterEach(() => {
 });
 
 describe("POST /api/early-access", () => {
+  test("responde 400 quando o corpo não é JSON", async () => {
+    const response = await POST(
+      new Request("http://localhost/api/early-access", {
+        method: "POST",
+        body: "{",
+      }),
+    );
+
+    expect(response.status).toBe(400);
+    expect(await response.json()).toEqual({
+      message: "Envie os dados em formato válido.",
+    });
+  });
+
+  test("responde 422 quando falta consentimento", async () => {
+    const response = await POST(
+      new Request("http://localhost/api/early-access", {
+        method: "POST",
+        body: JSON.stringify({
+          name: "Pessoa Exemplo",
+          email: "pessoa@example.com",
+          profileType: "client",
+          website: "",
+        }),
+      }),
+    );
+
+    expect(response.status).toBe(422);
+    expect(await response.json()).toEqual({
+      message:
+        "Revise o formulário e aceite o tratamento descrito na política de privacidade.",
+    });
+  });
+
+  test("responde 503 quando o banco ainda não está configurado", async () => {
+    delete process.env.DATABASE_URL;
+    const response = await POST(
+      new Request("http://localhost/api/early-access", {
+        method: "POST",
+        body: JSON.stringify({
+          name: "Pessoa Exemplo",
+          email: "pessoa@example.com",
+          profileType: "client",
+          privacyConsent: "on",
+          website: "",
+        }),
+      }),
+    );
+
+    expect(response.status).toBe(503);
+    expect(await response.json()).toEqual({
+      message: "O cadastro ainda não está conectado ao banco. Volte em breve.",
+    });
+  });
+
   test("não registra dados pessoais quando a persistência falha", async () => {
     process.env.DATABASE_URL = "postgres://test";
     const name = "Pessoa Exemplo";
