@@ -36,11 +36,12 @@ Uma publicação terá estados explícitos:
 
 ```text
 draft -> published -> withdrawn
-  `-> rejected
+draft -> rejected
 ```
 
 `rejected` representa bloqueio de conteúdo antes da publicação. Ele não cria
-um card no mural e não dá acesso a advogados.
+um card no mural e não dá acesso a advogados. Rascunhos rejeitados seguem a
+retenção de 30 dias da publicação retirada, contada a partir do bloqueio.
 
 Somente o estado `published` pode ser consultado no mural. O estado `withdrawn`
 impede novas consultas por URL ou ações de contato, sem apagar conversas
