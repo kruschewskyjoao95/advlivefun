@@ -1,6 +1,6 @@
 # ADR 0001: Identidade, papéis e autorização
 
-- Estado: aceito
+- Estado: proposto
 - Data: 2026-11-20
 - Relação: implementa as decisões de identidade do `ROADMAP.md`
 
@@ -38,7 +38,7 @@ O MVP usará Better Auth integrado diretamente ao PostgreSQL.
   automático por scanners de e-mail.
 - A sessão ficará em cookie `HttpOnly`, `Secure`, `SameSite` e, quando
   compatível com o fluxo, prefixado com `__Host-`.
-- Login, reenvio e confirmação terão rate limiting por identidade, endereço
+- Login, reenvio e confirmação terão rate limiting por e-mail, endereço
   IP e intenção.
 - Passkey será incluído posteriormente como método recorrente e passkey/MFA
   será obrigatório para contas administrativas e contas de maior risco antes
