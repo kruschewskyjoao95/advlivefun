@@ -22,6 +22,38 @@ PostgreSQL versionado com Drizzle e teste de não vazamento no cadastro. Ainda
 não existem autenticação, mural, verificação OAB, checkout, endpoint Stripe,
 persistência idempotente de eventos, saldo de contatos ou conversas.
 
+### Ponto de retomada — 2026-11-20
+
+O projeto está na **Etapa 1 · Validação**, aguardando aprendizado externo; não
+há autorização para iniciar autenticação, mural, cobrança ou receber caso real
+antes dos gates desta etapa.
+
+Entregas registradas e incorporadas em `main`:
+
+- Etapa 0 concluída pela stack nativa #4;
+- PRs #2, #3, #5, #6, #7 e #8 incorporados em `main`;
+- ADRs 0001 a 0004 publicados;
+- correção de logging do cadastro e 10 testes de regressão validados;
+- ausência de conta Stripe registrada como bloqueio externo.
+
+Pendências para concluir a Etapa 1:
+
+1. recrutar e entrevistar pelo menos 10 potenciais solicitantes e 5
+   profissionais;
+2. registrar parecer jurídico sobre mural, mensalidade, dois contatos e texto
+   da primeira abordagem;
+3. registrar revisão de privacidade, incluindo base legal, minimização,
+   retenção e RIPD quando aplicável;
+4. registrar revisão de segurança do desenho e dos testes existentes;
+5. decidir a UF/área da turma assistida e transformar o aprendizado nos
+   critérios de entrada da Etapa 2.
+
+O próximo trabalho de código, quando os quatro itens anteriores permitirem,
+é iniciar a **Etapa 2 · Identidade** a partir do ADR 0001. A criação de conta
+Stripe continua adiada e não bloqueia a especificação nem os testes com
+adapters locais; ela precisa acontecer antes da implementação e validação
+reais da Etapa 4 · Assinatura.
+
 A primeira entrega é documentação e aprendizado, não um piloto com casos
 reais. Até a validação completa, a interface pode demonstrar apenas estados
 abstratos, como “duas vagas”, “uma vaga” e “limite atingido”, sem narrativas
@@ -307,7 +339,7 @@ nome, e-mail, resumo, mensagem, token ou parâmetros de erro com dados pessoais.
 | Etapa | Entrega | Critério objetivo |
 | --- | --- | --- |
 | 0 · Especificação | Este roadmap e ADRs de produto, identidade, privacidade, concorrência, cobrança e conversas. | **Concluída:** README, COMPLIANCE, ADRs e testes de regressão refletem as decisões propostas nos ADRs. |
-| 1 · Validação | Cadastro nacional e entrevistas em uma turma assistida. Protótipo sem casos inventados. | 10 potenciais solicitantes e 5 profissionais; parecer jurídico, privacidade e segurança registrados. |
+| 1 · Validação | Cadastro nacional e entrevistas em uma turma assistida. Protótipo sem casos inventados. | **Em andamento:** 10 potenciais solicitantes e 5 profissionais; parecer jurídico, privacidade e segurança registrados. |
 | 2 · Identidade | Better Auth, conta, CPF/HMAC, papéis, verificação OAB e suspensão. | Anônimo ou conta pendente não lê mural; suspensão bloqueia novos contatos. |
 | 3 · Publicação | Área/UF, prévia, bloqueio de identificadores, consentimento, mural, retirada e RLS. | Autora vê seu caso; outro cliente não lê; advogado pendente ou suspenso não acessa; URL pública retorna não autorizado. |
 | 4 · Assinatura | Stripe 5/10/25, rollover 2×, portal, webhook, idempotência e reconciliação. | Adesão, renovação, falha, cancelamento, upgrade, downgrade, evento repetido e fora de ordem mantêm saldo e direitos corretos. |
